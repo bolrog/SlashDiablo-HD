@@ -1,49 +1,62 @@
-/*****************************************************************************
- *                                                                           *
- * SlashDiablo HD                                                            *
- * Copyright (C) 2017  Mir Drualga                                           *
- *                                                                           *
- *  This program is free software: you can redistribute it and/or modify     *
- *  it under the terms of the GNU Affero General Public License as published *
- *  by the Free Software Foundation, either version 3 of the License, or     *
- *  (at your option) any later version.                                      *
- *                                                                           *
- *  This program is distributed in the hope that it will be useful,          *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
- *  GNU Affero General Public License for more details.                      *
- *                                                                           *
- *  You should have received a copy of the GNU Affero General Public License *
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.    *
- *                                                                           *
- *---------------------------------------------------------------------------*
- *                                                                           *
- *   The file defines the interception functions used to call the draw       *
- *   functions safely.                                                       *
- *                                                                           *
- *****************************************************************************/
+; /*****************************************************************************
+;  *                                                                           *
+;  * SlashDiablo HD                                                            *
+;  * Copyright (C) 2017  Mir Drualga                                           *
+;  *                                                                           *
+;  *  This program is free software: you can redistribute it and/or modify     *
+;  *  it under the terms of the GNU Affero General Public License as published *
+;  *  by the Free Software Foundation, either version 3 of the License, or     *
+;  *  (at your option) any later version.                                      *
+;  *                                                                           *
+;  *  This program is distributed in the hope that it will be useful,          *
+;  *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+;  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
+;  *  GNU Affero General Public License for more details.                      *
+;  *                                                                           *
+;  *  You should have received a copy of the GNU Affero General Public License *
+;  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.    *
+;  *                                                                           *
+;  *---------------------------------------------------------------------------*
+;  *                                                                           *
+;  *   The file defines the interception functions used to call the draw       *
+;  *   functions safely.                                                       *
+;  *                                                                           *
+;  *****************************************************************************/
+.386
+.MODEL FLAT
 
-.intel_syntax
+PUBLIC _determineVideoOptionTextInterception
+PUBLIC _drawControlPanel800ForegroundInterception
+PUBLIC _drawControlPanelBackgroundInterception
+PUBLIC _drawPanelBackgroundInterception
 
-.text
-.global _determineVideoOptionTextInterception
-.global _drawControlPanel800ForegroundInterception
-.global _drawControlPanelBackgroundInterception
-.global _drawPanelBackgroundInterception
+PUBLIC _drawActiveStatsButtonInterception
+PUBLIC _drawInactiveStatsButtonInterception
+PUBLIC _drawStatsButtonTextInterception
 
-.global _drawActiveStatsButtonInterception
-.global _drawInactiveStatsButtonInterception
-.global _drawStatsButtonTextInterception
+PUBLIC _drawActiveSkillButtonInterception
+PUBLIC _drawInactiveSkillButtonInterception
+PUBLIC _drawSkillButtonTextInterception
 
-.global _drawActiveSkillButtonInterception
-.global _drawInactiveSkillButtonInterception
-.global _drawSkillButtonTextInterception
+PUBLIC _unloadCellFilesInterception
 
-.global _unloadCellFilesInterception
+EXTERN _determineVideoOptionText@16 :PROC
+EXTERN _drawControlPanel800Foreground :PROC
+EXTERN _drawControlPanelBackground :PROC
+EXTERN _drawPanelBackground :PROC
+EXTERN _drawActiveStatsButton@0 :PROC
+EXTERN _drawInactiveStatsButton@0 :PROC
+EXTERN _drawStatsButtonText@0 :PROC
+EXTERN _drawActiveSkillButton@0 :PROC
+EXTERN _drawInactiveSkillButton@0 :PROC
+EXTERN _drawSkillButtonText@0 :PROC
+EXTERN _unloadCellFiles@4 :PROC
+
+_TEXT SEGMENT
 
 _determineVideoOptionTextInterception:
-    // Original code
-    mov ecx, dword ptr [eax + ecx * 4 + 0x540]
+    ; Original code
+    mov ecx, dword ptr [eax + ecx * 4 + 540h]
 
     push edx
     sub esp, 4
@@ -71,7 +84,7 @@ _drawControlPanelBackgroundInterception:
     call _drawControlPanelBackground
     popad
 
-    //Original code
+    ;Original code
     mov ecx, 18
     ret
 
@@ -80,8 +93,8 @@ _drawPanelBackgroundInterception:
     call _drawPanelBackground
     popad
 
-    //Original code
-    add esp, 0x128
+    ;Original code
+    add esp, 128h
     ret
 
 _drawActiveStatsButtonInterception:
@@ -130,3 +143,7 @@ _unloadCellFilesInterception:
     mov esi, dword ptr [esi]
     add esp, 4
     ret
+
+_TEXT ENDS
+
+END

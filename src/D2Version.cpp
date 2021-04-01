@@ -24,6 +24,7 @@
  *****************************************************************************/
 
 #include "D2Version.h"
+#include "../../../src/d2dxintegration/D2DXIntegration.h"
 
 #include <windows.h>
 #include <memory>
@@ -67,6 +68,9 @@ bool D2Version::isGameVersion114Plus() {
 Glide3xVersion D2Version::getGlide3xVersion() {
     static Glide3xVersion glide3xVersion = getGlide3xVersion(determineVersionString(
             L"glide3x.dll"));
+    if (glide3xVersion == Glide3xVersion::INVALID && d2dx::IsD2DXLoaded()) {
+        glide3xVersion = Glide3xVersion::D2DX;
+    }
     return glide3xVersion;
 }
 

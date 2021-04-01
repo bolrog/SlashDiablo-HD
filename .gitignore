@@ -29,3 +29,5 @@
 *.app
 /Release/
 /Debug/
+/vc/Debug/
+/vc/Release/

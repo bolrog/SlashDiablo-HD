@@ -29,6 +29,10 @@
 #include <cstdlib>
 #include <regex>
 #include <windows.h>
+#include <ios>
+#include <iostream>
+#include <sstream>
+#include <string_view>
 
 D2Config::D2Config() : D2Config(DEFAULT_CONFIG_PATH) {
 }
@@ -101,11 +105,12 @@ int D2Config::readInt(const std::wstring& sectionName,
 
 std::string D2Config::readString(const std::wstring& sectionName, const std::wstring& keyName, const std::string& defaultValue) const {
     wchar_t defaultValueWideStringBuffer[MAX_PATH];
-    std::mbstowcs(defaultValueWideStringBuffer, defaultValue.c_str(), MAX_PATH);
+    size_t numCharsConverted;
+    mbstowcs_s(&numCharsConverted, defaultValueWideStringBuffer, defaultValue.c_str(), MAX_PATH);
     std::wstring returnValueWideString = readWideString(sectionName, keyName, defaultValueWideStringBuffer);
 
     char returnValueCharStringBuffer[MAX_PATH];
-    std::wcstombs(returnValueCharStringBuffer, returnValueWideString.c_str(), MAX_PATH);
+    wcstombs_s(&numCharsConverted, returnValueCharStringBuffer, returnValueWideString.c_str(), MAX_PATH);
     return returnValueCharStringBuffer;
 }
 

@@ -46,7 +46,8 @@ enum class GameVersion : int {
 enum class Glide3xVersion : int {
     INVALID,
     VERSION_14e,
-    RESURGENCE
+    RESURGENCE,
+    D2DX
 };
 
 namespace D2Version {

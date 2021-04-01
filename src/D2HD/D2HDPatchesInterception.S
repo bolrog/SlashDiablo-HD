@@ -1,51 +1,68 @@
-/*****************************************************************************
- *                                                                           *
- * SlashDiablo HD                                                            *
- * Copyright (C) 2017  Mir Drualga                                           *
- *                                                                           *
- *  This program is free software: you can redistribute it and/or modify     *
- *  it under the terms of the GNU Affero General Public License as published *
- *  by the Free Software Foundation, either version 3 of the License, or     *
- *  (at your option) any later version.                                      *
- *                                                                           *
- *  This program is distributed in the hope that it will be useful,          *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
- *  GNU Affero General Public License for more details.                      *
- *                                                                           *
- *  You should have received a copy of the GNU Affero General Public License *
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.    *
- *                                                                           *
- *---------------------------------------------------------------------------*
- *                                                                           *
- *   Defines interception functions with low-level x86 code to safely        *
- *   allow modifying Diablo II's internal code.                              *
- *                                                                           *
- *   Used by GCC as a replacement for __declspec(naked).                     *
- *                                                                           *
- *****************************************************************************/
+; /*****************************************************************************
+;  *                                                                           *
+;  * SlashDiablo HD                                                            *
+;  * Copyright (C) 2017  Mir Drualga                                           *
+;  *                                                                           *
+;  *  This program is free software: you can redistribute it and/or modify     *
+;  *  it under the terms of the GNU Affero General Public License as published *
+;  *  by the Free Software Foundation, either version 3 of the License, or     *
+;  *  (at your option) any later version.                                      *
+;  *                                                                           *
+;  *  This program is distributed in the hope that it will be useful,          *
+;  *  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+;  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
+;  *  GNU Affero General Public License for more details.                      *
+;  *                                                                           *
+;  *  You should have received a copy of the GNU Affero General Public License *
+;  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.    *
+;  *                                                                           *
+;  *---------------------------------------------------------------------------*
+;  *                                                                           *
+;  *   Defines interception functions with low-level x86 code to safely        *
+;  *   allow modifying Diablo II's internal code.                              *
+;  *                                                                           *
+;  *   Used by GCC as a replacement for __declspec(naked).                     *
+;  *                                                                           *
+;  *****************************************************************************/
+.386
+.MODEL FLAT
 
-.intel_syntax
+PUBLIC _repositionPanelsInterception
+PUBLIC _getPatchedResolutionModeInterception
+PUBLIC _getModeParamsInterception107
+PUBLIC _getModeParamsInterception111
+PUBLIC _resizeGameLogicResolutionInterception
+PUBLIC _resizeGameWindowResizeWidthInterception
+PUBLIC _resizeGameWindowResizeHeightInterception
+PUBLIC _setResolutionModeEAXInterception
+PUBLIC _setResolutionModeEDIInterception
+PUBLIC _setResolutionModeFromMenuInterception
+PUBLIC _isMouseOverStatsButtonInterception
+PUBLIC _isMouseOverSkillButtonInterception
+PUBLIC _setGDIRenderResolutionInterception
+PUBLIC _setGDIForegroundRenderWidthInterception
+PUBLIC _setDirectDrawRenderResolutionInterception
+PUBLIC _setDirect3DRenderResolutionInterception
+PUBLIC _setGlideRenderResolutionInterception
+PUBLIC _setupGlideWindowSizeInterception
 
-.text
-.global _repositionPanelsInterception
-.global _getPatchedResolutionModeInterception
-.global _getModeParamsInterception107
-.global _getModeParamsInterception111
-.global _resizeGameLogicResolutionInterception
-.global _resizeGameWindowResizeWidthInterception
-.global _resizeGameWindowResizeHeightInterception
-.global _setResolutionModeEAXInterception
-.global _setResolutionModeEDIInterception
-.global _setResolutionModeFromMenuInterception
-.global _isMouseOverStatsButtonInterception
-.global _isMouseOverSkillButtonInterception
-.global _setGDIRenderResolutionInterception
-.global _setGDIForegroundRenderWidthInterception
-.global _setDirectDrawRenderResolutionInterception
-.global _setDirect3DRenderResolutionInterception
-.global _setGlideRenderResolutionInterception
-.global _setupGlideWindowSizeInterception
+EXTERN _repositionPanels :PROC
+EXTERN _getPatchedResolutionMode@4 :PROC
+EXTERN _getModeParams@12 :PROC
+EXTERN _resizeGameLogicResolution@4 :PROC
+EXTERN _getGameWindowWidth@4 :PROC
+EXTERN _getGameWindowHeight@4 :PROC
+EXTERN _setResolutionMode@8 : PROC
+EXTERN _setResolutionModeFromMenu@4 :PROC
+EXTERN _isMouseOverStatsButton@4 :PROC
+EXTERN _isMouseOverSkillButton@4 :PROC
+EXTERN _setGDIForegroundRenderWidth@4 :PROC
+EXTERN _setDirectDrawRenderResolution@12 :PROC
+EXTERN _setDirect3DRenderResolution@4 :PROC
+EXTERN _setGlideRenderResolution@8 :PROC
+EXTERN _setupGlideWindowSize@4 :PROC
+
+_TEXT SEGMENT
 
 _repositionPanelsInterception:
     pushad
@@ -146,7 +163,7 @@ _setResolutionModeEDIInterception:
 
 _setResolutionModeFromMenuInterception:
     pushad
-    lea ecx, dword ptr [ecx + 0x124]
+    lea ecx, dword ptr [ecx + 124h]
     push ecx
     call _setResolutionModeFromMenu@4
     popad
@@ -229,7 +246,7 @@ _setGlideRenderResolutionInterception:
     mov ecx, dword ptr [ecx]
     add esp, 4
 
-    // Original code
+    ; Original code
     xor edx, edx
     mov esi, 1
     ret
@@ -240,3 +257,6 @@ _setupGlideWindowSizeInterception:
     call _setupGlideWindowSize@4
     popad
     ret
+
+_TEXT ENDS
+END

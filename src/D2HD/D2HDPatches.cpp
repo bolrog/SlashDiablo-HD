@@ -47,12 +47,34 @@
  *   interception function.                                                  *
  *                                                                           *
  *****************************************************************************/
-
 #include "D2HDPatches.h"
+#include "../../../src/d2dxintegration/D2DXIntegration.h"
 
 #include "../DLLmain.h"
 
-void D2HD::getModeParams(int mode, int* width, int* height) {
+void __stdcall D2HD::getModeParams(int mode, int* width, int* height) {
+
+    if (d2dx::IsD2DXLoaded())
+    {
+        switch (mode)
+        {
+        case 0:
+            *width = 640;
+            *height = 480;
+            break;
+        case 1:
+        case 2:
+            *width = 800;
+            *height = 600;
+            break;
+        default:
+            d2dx::GetSuggestedCustomResolution(width, height);
+            break;
+        }
+
+        return;
+    }
+
     if ((size_t) mode < D2HD::D2HDResolution::getResolutions().size()) {
         *width = D2HD::D2HDResolution::getResolutions().at(mode).getWidth();
         *height = D2HD::D2HDResolution::getResolutions().at(mode).getHeight();
@@ -183,6 +205,11 @@ void __stdcall D2HD::setGlideRenderResolution(int newGameResolutionMode,
     if (D2Version::getGlide3xVersion() == Glide3xVersion::RESURGENCE
             && *D2GLIDE_WindowWidth == 1068 && *D2GLIDE_WindowHeight == 600) {
         *glideResolutionMode = 0xFF;
+    }
+
+    if (d2dx::IsD2DXLoaded())
+    {
+        d2dx::SetCustomResolution(*D2GLIDE_WindowWidth, *D2GLIDE_WindowHeight);
     }
 
     *D2GLIDE_SpritesInited = (newGameResolutionMode != 1);

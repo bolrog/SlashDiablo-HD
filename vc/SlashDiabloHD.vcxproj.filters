@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\D2Config.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDCellContext.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDColor.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDConfig.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDDraw.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDInventory.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDPatches.cpp" />
+    <ClCompile Include="..\src\D2HD\D2HDResolution.cpp" />
+    <ClCompile Include="..\src\D2Offset.cpp" />
+    <ClCompile Include="..\src\D2Patch\D2AnyPatch.cpp" />
+    <ClCompile Include="..\src\D2Patch\D2BasePatch.cpp" />
+    <ClCompile Include="..\src\D2Patch\D2InterceptorPatch.cpp" />
+    <ClCompile Include="..\src\D2Stubs.cpp" />
+    <ClCompile Include="..\src\D2Version.cpp" />
+    <ClCompile Include="..\src\DLLmain.cpp" />
+    <ClCompile Include="..\..\..\src\d2dxintegration\D2DXIntegration.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\D2Config.h" />
+    <ClInclude Include="..\src\D2Constants.h" />
+    <ClInclude Include="..\src\D2DataTables.h" />
+    <ClInclude Include="..\src\D2HD\D2HDCellContext.h" />
+    <ClInclude Include="..\src\D2HD\D2HDColor.h" />
+    <ClInclude Include="..\src\D2HD\D2HDConfig.h" />
+    <ClInclude Include="..\src\D2HD\D2HDDraw.h" />
+    <ClInclude Include="..\src\D2HD\D2HDInventory.h" />
+    <ClInclude Include="..\src\D2HD\D2HDPatches.h" />
+    <ClInclude Include="..\src\D2HD\D2HDResolution.h" />
+    <ClInclude Include="..\src\D2Offset.h" />
+    <ClInclude Include="..\src\D2PacketDef.h" />
+    <ClInclude Include="..\src\D2Patch.h" />
+    <ClInclude Include="..\src\D2Patches.h" />
+    <ClInclude Include="..\src\D2Patch\D2AnyPatch.h" />
+    <ClInclude Include="..\src\D2Patch\D2BasePatch.h" />
+    <ClInclude Include="..\src\D2Patch\D2InterceptorPatch.h" />
+    <ClInclude Include="..\src\D2Ptrs.h" />
+    <ClInclude Include="..\src\D2Structs.h" />
+    <ClInclude Include="..\src\D2Stubs.h" />
+    <ClInclude Include="..\src\D2Vars.h" />
+    <ClInclude Include="..\src\D2Version.h" />
+    <ClInclude Include="..\src\DLLmain.h" />
+    <ClInclude Include="..\src\TemplateIncludes.h" />
+    <ClInclude Include="..\..\..\src\d2dxintegration\D2DXIntegration.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\src\D2HD\D2HDConfigInterception.S" />
+    <MASM Include="..\src\D2HD\D2HDDrawInterception.S" />
+    <MASM Include="..\src\D2HD\D2HDPatchesInterception.S" />
+    <MASM Include="..\src\D2StubsAsm.S" />
+  </ItemGroup>
+</Project>

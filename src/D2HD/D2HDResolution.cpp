@@ -24,6 +24,7 @@
  *****************************************************************************/
 
 #include "D2HDResolution.h"
+#include "../../../src/d2dxintegration/D2DXIntegration.h"
 
 #include <algorithm>
 #include "../DLLmain.h"
@@ -54,11 +55,25 @@ bool D2HD::D2HDResolution::operator==(const D2HD::D2HDResolution& other) const {
 }
 
 std::vector<D2HD::D2HDResolution>& D2HD::D2HDResolution::getResolutions() {
+    static bool initialized = false;
     if (D2GFX_GetRenderMode() == D2RenderModes::VIDEO_MODE_DDRAW
             || D2GFX_GetRenderMode() == D2RenderModes::VIDEO_MODE_D3D) {
         D2HD::D2HDResolution::removeNonStandardResolutions();
     }
+    else if (!initialized) {
+        if (d2dx::IsD2DXLoaded())
+        {
+            int32_t customWidth, customHeight;
+            d2dx::GetSuggestedCustomResolution(&customWidth, &customHeight);
 
+            resolutions.clear();
+            resolutions.push_back(D2HD::D2HDResolution(640, 480));
+            resolutions.push_back(D2HD::D2HDResolution(800, 600));
+            resolutions.push_back(D2HD::D2HDResolution(800, 600));
+            resolutions.push_back(D2HD::D2HDResolution(customWidth, customHeight));
+        }
+        initialized = true;
+    }
     return D2HD::D2HDResolution::resolutions;
 }
 
