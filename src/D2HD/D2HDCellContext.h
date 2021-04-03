@@ -73,7 +73,7 @@ public:
 
 
 private:
-    std::unique_ptr<struct CellContext> pCellContext;
+    struct CellContext* pCellContext;
     std::string fileName;
 
     void setCellFilePtr(CellFile* pCellFile);
