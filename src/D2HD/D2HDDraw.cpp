@@ -140,9 +140,9 @@ void D2HD::Draw::drawControlPanel800Foreground() {
 }
 
 void D2HD::Draw::drawControlPanelBackground() {
-    D2HD::D2HDCellContext& panelLeft = config.isFlipD2MRControlPanel() ? d2mrFancyPanelFlipLeft : d2mrFancyPanelLeft;
-    D2HD::D2HDCellContext& panelRight = config.isFlipD2MRControlPanel() ? d2mrFancyPanelFlipRight : d2mrFancyPanelRight;
-    D2HD::D2HDCellContext& panelHorizontalBar = config.isFlipD2MRControlPanel() ? d2mrFancyPanelFlipHorizontalBar : d2mrFancyPanelHorizontalBar;
+    D2HD::D2HDCellContext& panelLeft = D2HDConfig::DEFAULT_FLIP_D2MR_CONTROL_PANEL ? d2mrFancyPanelFlipLeft : d2mrFancyPanelLeft;
+    D2HD::D2HDCellContext& panelRight = D2HDConfig::DEFAULT_FLIP_D2MR_CONTROL_PANEL ? d2mrFancyPanelFlipRight : d2mrFancyPanelRight;
+    D2HD::D2HDCellContext& panelHorizontalBar = D2HDConfig::DEFAULT_FLIP_D2MR_CONTROL_PANEL ? d2mrFancyPanelFlipHorizontalBar : d2mrFancyPanelHorizontalBar;
 
     panelLeft.loadFileSafely();
     panelRight.loadFileSafely();
@@ -206,13 +206,13 @@ void D2HD::Draw::drawLeftPanelBackground() {
             d2mrStoneBack.setFrame(((row % 2) * 2) + (col % 2));
             int backBasePositionX = basePositionX - ((col + 1) * backWidth);
 
-            d2mrStoneBack.draw(backBasePositionX, backBasePositionY, config.getLeftPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+            d2mrStoneBack.draw(backBasePositionX, backBasePositionY, D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
         }
     }
 
     // Draw the ribbons only if the user has it enabled AND the game resolution allows the ribbons to be drawn without
     // problems.
-    if (!config.isEnableD2MRBackgroundRibbon()
+    if (!D2HDConfig::DEFAULT_ENABLE_D2MR_BACKGROUND_RIBBON
             && ((*D2CLIENT_WindowHeight - ((256 + 256 + 40) + 48)) <= (2 * (256 + 28)))) {
         return;
     }
@@ -224,50 +224,50 @@ void D2HD::Draw::drawLeftPanelBackground() {
     d2mrFancyVerticalBar.loadFileSafely();
 
     d2mrFancyBorderLeft.setFrame(0);
-    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY + 256) + (256 + 256 + 40), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY + 256) + (256 + 256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     d2mrFancyBorderLeft.setFrame(1);
-    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY + 256 + 28) + (256 + 256 + 40), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY + 256 + 28) + (256 + 256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
-    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     d2mrFancyBorderLeft.setFrame(0);
-    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY - 28), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderLeft.draw((basePositionX - 60), (basePositionY - 28), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
-    if (!config.isEnableD2MRPanelBorderStyle()) {
+    if (!D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE) {
         basePositionX += 2;
     }
 
     d2mrFancyHorizontalBar.setFrame(2);
 
-    d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35), (basePositionY + (256 + 256 + 40)), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
-    d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35), (basePositionY + 60), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35), (basePositionY + (256 + 256 + 40)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
+    d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35), (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     for (int i = 0; (basePositionX - 400 - 35) - (i * 256) >= 0; i++) {
         d2mrFancyHorizontalBar.setFrame(std::abs(i - 1) % 2);
-        d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35) - ((i + 1) * 256), (basePositionY + (256 + 256 + 40)), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
-        d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35) - ((i + 1) * 256), (basePositionY + 60), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+        d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35) - ((i + 1) * 256), (basePositionY + (256 + 256 + 40)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
+        d2mrFancyHorizontalBar.draw((basePositionX - 400 - 35) - ((i + 1) * 256), (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     }
 
     d2mrFancyVerticalBar.setFrame(2);
 
-    d2mrFancyVerticalBar.draw((basePositionX - 400), (basePositionY), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyVerticalBar.draw((basePositionX - 400), (basePositionY), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     for (int i = 0; ((basePositionY - 35) - (i * 256)) >= 0; i++) {
         d2mrFancyVerticalBar.setFrame(std::abs(i - 1) % 2);
-        d2mrFancyVerticalBar.draw((basePositionX - 400), ((basePositionY - 35) - (i * 256)), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+        d2mrFancyVerticalBar.draw((basePositionX - 400), ((basePositionY - 35) - (i * 256)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     }
 
     for (int i = 0; ((basePositionY + (256 + 256 + 40)) + (i * 256)) < (*D2CLIENT_WindowHeight); i++) {
         d2mrFancyVerticalBar.setFrame(i % 2);
-        d2mrFancyVerticalBar.draw((basePositionX - 400), ((basePositionY + (256 + 256 + 40)) + ((i + 1) * 256)), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+        d2mrFancyVerticalBar.draw((basePositionX - 400), ((basePositionY + (256 + 256 + 40)) + ((i + 1) * 256)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     }
 }
 
 void D2HD::Draw::drawLeftPanelBorders() {
-    D2HD::D2HDCellContext& borderLeft = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderInterfaceLeft : neoD2MRFancyBorderInterfaceLeft;
-    D2HD::D2HDCellContext& borderBottomLeft = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderBottom : neoD2MRFancyBorderBottomLeft;
-    D2HD::D2HDCellContext& borderTopLeft = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderTop : neoD2MRFancyBorderTopLeft;
-    D2HD::D2HDCellContext& borderCornerBottomLeft = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerBottomLeft;
-    D2HD::D2HDCellContext& borderCornerTopLeft = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerTopLeft;
+    D2HD::D2HDCellContext& borderLeft = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderInterfaceLeft : neoD2MRFancyBorderInterfaceLeft;
+    D2HD::D2HDCellContext& borderBottomLeft = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderBottom : neoD2MRFancyBorderBottomLeft;
+    D2HD::D2HDCellContext& borderTopLeft = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderTop : neoD2MRFancyBorderTopLeft;
+    D2HD::D2HDCellContext& borderCornerBottomLeft = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerBottomLeft;
+    D2HD::D2HDCellContext& borderCornerTopLeft = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerTopLeft;
 
     borderLeft.loadFileSafely();
     borderBottomLeft.loadFileSafely();
@@ -278,37 +278,37 @@ void D2HD::Draw::drawLeftPanelBorders() {
     int basePositionX = (*D2CLIENT_WindowWidth / 2) - 400;
     int basePositionY = (*D2CLIENT_WindowHeight / 2) - 300;
 
-    if (!config.isEnableD2MRPanelBorderStyle()) {
+    if (!D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE) {
         basePositionX += 2;
     }
 
     // Draw top border pieces
     borderTopLeft.setFrame(0);
-    borderTopLeft.draw((basePositionX + 56), (basePositionY + 60), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderTopLeft.draw((basePositionX + 56), (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderTopLeft.setFrame(1);
-    borderTopLeft.draw((basePositionX + 56) + 256, (basePositionY + 60), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderTopLeft.draw((basePositionX + 56) + 256, (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw bottom border pieces
     borderBottomLeft.setFrame(0);
-    borderBottomLeft.draw((basePositionX + 56), (basePositionY + 256) + (256 + 40), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderBottomLeft.draw((basePositionX + 56), (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderBottomLeft.setFrame(1);
-    borderBottomLeft.draw((basePositionX + 56) + 256, (basePositionY + 256) + (256 + 40), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderBottomLeft.draw((basePositionX + 56) + 256, (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw top left corner border pieces
     borderCornerTopLeft.setFrame(0);
-    borderCornerTopLeft.draw((basePositionX + 56) + 284, (basePositionY + 60), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderCornerTopLeft.draw((basePositionX + 56) + 284, (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw bottom left corner border pieces
     borderCornerBottomLeft.setFrame(0);
-    borderCornerBottomLeft.draw((basePositionX + 56) + 284, (basePositionY) + (256 + 256 + 40), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderCornerBottomLeft.draw((basePositionX + 56) + 284, (basePositionY) + (256 + 256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw left border pieces
     borderLeft.setFrame(0);
-    borderLeft.draw(basePositionX, (basePositionY + 256), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderLeft.draw(basePositionX, (basePositionY + 256), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderLeft.setFrame(1);
-    borderLeft.draw(basePositionX, (basePositionY + 256) + 256, config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderLeft.draw(basePositionX, (basePositionY + 256) + 256, D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderLeft.setFrame(2);
-    borderLeft.draw(basePositionX, (basePositionY + 256) + (256 + 40), config.getLeftPanelBorderColor().getBGRFormat(), 5, nullptr);
+    borderLeft.draw(basePositionX, (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 }
 
 void D2HD::Draw::drawRightPanelBackground() {
@@ -328,13 +328,13 @@ void D2HD::Draw::drawRightPanelBackground() {
             d2mrStoneBack.setFrame(((row % 2) * 2) + ((col + 1) % 2));
             int backBasePositionX = basePositionX + (col * backWidth);
 
-            d2mrStoneBack.draw(backBasePositionX, backBasePositionY, config.getRightPanelBackgroundColor().getBGRFormat(), 5, 0);
+            d2mrStoneBack.draw(backBasePositionX, backBasePositionY, D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, 0);
         }
     }
 
     // Draw the ribbons only if the user has it enabled AND the game resolution allows the ribbons to be drawn without
     // problems.
-    if (!config.isEnableD2MRBackgroundRibbon()
+    if (!D2HDConfig::DEFAULT_ENABLE_D2MR_BACKGROUND_RIBBON
             && ((*D2CLIENT_WindowHeight - ((256 + 256 + 40) + 48)) <= (2 * (256 + 28)))) {
         return;
     }
@@ -346,42 +346,42 @@ void D2HD::Draw::drawRightPanelBackground() {
     int basePositionY = (*D2CLIENT_WindowHeight / 2) - 300;
 
     d2mrFancyBorderRight.setFrame(0);
-    d2mrFancyBorderRight.draw((basePositionX), (basePositionY + 256) + (256 + 256 + 40), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderRight.draw((basePositionX), (basePositionY + 256) + (256 + 256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     d2mrFancyBorderRight.setFrame(1);
-    d2mrFancyBorderRight.draw((basePositionX), (basePositionY + 256 + 28) + (256 + 256 + 40), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderRight.draw((basePositionX), (basePositionY + 256 + 28) + (256 + 256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
-    d2mrFancyBorderRight.draw((basePositionX), (basePositionY), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderRight.draw((basePositionX), (basePositionY), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     d2mrFancyBorderRight.setFrame(0);
-    d2mrFancyBorderRight.draw((basePositionX), (basePositionY - 28), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyBorderRight.draw((basePositionX), (basePositionY - 28), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     for (int i = 0; (basePositionX + 400) + (i * 256) < (*D2CLIENT_WindowWidth); i++) {
         d2mrFancyHorizontalBar.setFrame(i % 2);
-        d2mrFancyHorizontalBar.draw((basePositionX + 400) + (i * 256), (basePositionY + (256 + 256 + 40)), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
-        d2mrFancyHorizontalBar.draw((basePositionX + 400) + (i * 256), (basePositionY + 60), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+        d2mrFancyHorizontalBar.draw((basePositionX + 400) + (i * 256), (basePositionY + (256 + 256 + 40)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
+        d2mrFancyHorizontalBar.draw((basePositionX + 400) + (i * 256), (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     }
 
     d2mrFancyVerticalBar.setFrame(2);
-    d2mrFancyVerticalBar.draw((basePositionX + 400 - 60), (basePositionY), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    d2mrFancyVerticalBar.draw((basePositionX + 400 - 60), (basePositionY), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     for (int i = 0; ((basePositionY - 35) - (i * 256)) >= 0; i++) {
         d2mrFancyVerticalBar.setFrame(std::abs(i - 1) % 2);
-        d2mrFancyVerticalBar.draw((basePositionX + 400 - 60), ((basePositionY - 35) - (i * 256)), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+        d2mrFancyVerticalBar.draw((basePositionX + 400 - 60), ((basePositionY - 35) - (i * 256)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     }
 
     for (int i = 0;
             ((basePositionY + (256 + 256 + 40)) + (i * 256)) < (*D2CLIENT_WindowHeight);
             i++) {
         d2mrFancyVerticalBar.setFrame(i % 2);
-        d2mrFancyVerticalBar.draw((basePositionX + 400 - 60), ((basePositionY + (256 + 256 + 40)) + ((i + 1) * 256)), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+        d2mrFancyVerticalBar.draw((basePositionX + 400 - 60), ((basePositionY + (256 + 256 + 40)) + ((i + 1) * 256)), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     }
 }
 
 void D2HD::Draw::drawRightPanelBorders() {
-    D2HD::D2HDCellContext& borderRight = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderInterfaceRight : neoD2MRFancyBorderInterfaceRight;
-    D2HD::D2HDCellContext& borderBottomRight = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderBottom : neoD2MRFancyBorderBottomRight;
-    D2HD::D2HDCellContext& borderTopRight = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderTop : neoD2MRFancyBorderTopRight;
-    D2HD::D2HDCellContext& borderCornerBottomRight = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerBottomRight;
-    D2HD::D2HDCellContext& borderCornerTopRight = config.isEnableD2MRPanelBorderStyle() ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerTopRight;
+    D2HD::D2HDCellContext& borderRight = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderInterfaceRight : neoD2MRFancyBorderInterfaceRight;
+    D2HD::D2HDCellContext& borderBottomRight = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderBottom : neoD2MRFancyBorderBottomRight;
+    D2HD::D2HDCellContext& borderTopRight = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderTop : neoD2MRFancyBorderTopRight;
+    D2HD::D2HDCellContext& borderCornerBottomRight = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerBottomRight;
+    D2HD::D2HDCellContext& borderCornerTopRight = D2HDConfig::DEFAULT_ENABLE_D2MR_PANEL_BORDER_STYLE ? d2mrFancyBorderCorner : neoD2MRFancyBorderCornerTopRight;
 
     borderRight.loadFileSafely();
     borderBottomRight.loadFileSafely();
@@ -394,31 +394,31 @@ void D2HD::Draw::drawRightPanelBorders() {
 
     // Draw top border pieces
     borderTopRight.setFrame(0);
-    borderTopRight.draw((basePositionX + 60), (basePositionY + 60), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderTopRight.draw((basePositionX + 60), (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderTopRight.setFrame(1);
-    borderTopRight.draw((basePositionX + 60) + 256, (basePositionY + 60), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderTopRight.draw((basePositionX + 60) + 256, (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw bottom border pieces
     borderBottomRight.setFrame(0);
-    borderBottomRight.draw((basePositionX + 60), (basePositionY + 256) + (256 + 40), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderBottomRight.draw((basePositionX + 60), (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderBottomRight.setFrame(1);
-    borderBottomRight.draw((basePositionX + 60) + 256, (basePositionY + 256) + (256 + 40), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderBottomRight.draw((basePositionX + 60) + 256, (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw top right corner border pieces
     borderCornerTopRight.setFrame(0);
-    borderCornerTopRight.draw((basePositionX), (basePositionY + 60), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderCornerTopRight.draw((basePositionX), (basePositionY + 60), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw bottom right corner border pieces
     borderCornerBottomRight.setFrame(0);
-    borderCornerBottomRight.draw((basePositionX), (basePositionY + 256) + (256 + 40), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderCornerBottomRight.draw((basePositionX), (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 
     // Draw left border pieces
     borderRight.setFrame(0);
-    borderRight.draw((basePositionX + 320), (basePositionY + 256), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderRight.draw((basePositionX + 320), (basePositionY + 256), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderRight.setFrame(1);
-    borderRight.draw((basePositionX + 320), (basePositionY + 256) + 256, config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderRight.draw((basePositionX + 320), (basePositionY + 256) + 256, D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
     borderRight.setFrame(2);
-    borderRight.draw((basePositionX + 320), (basePositionY + 256) + (256 + 40), config.getRightPanelBackgroundColor().getBGRFormat(), 5, nullptr);
+    borderRight.draw((basePositionX + 320), (basePositionY + 256) + (256 + 40), D2HDConfig::DEFAULT_COLOR.getBGRFormat(), 5, nullptr);
 }
 
 void __stdcall D2HD::Draw::drawActiveStatsButton() {

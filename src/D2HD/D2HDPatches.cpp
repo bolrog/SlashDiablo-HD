@@ -48,9 +48,10 @@
  *                                                                           *
  *****************************************************************************/
 #include "D2HDPatches.h"
-#include "../../../src/d2dxintegration/D2DXIntegration.h"
 
-#include "../DLLmain.h"
+#include "../SDHD.h"
+
+#include "../../../../src/d2dx/D2DXIntegrationImpl.h"
 
 void __stdcall D2HD::getModeParams(int mode, int* width, int* height) {
 

@@ -53,7 +53,7 @@
 #ifndef D2STUBS_H
 #define D2STUBS_H
 
-#include "DLLmain.h"
+#include "SDHD.h"
 
 HANDLE loadMPQ(DWORD OrderFlag, const char* szDllFile, const char* szMpqFile, const char* szName, DWORD _1, BOOL(__stdcall *fnMPQMissing)());
 #endif

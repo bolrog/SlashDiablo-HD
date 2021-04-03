@@ -49,7 +49,7 @@
 #include <memory>
 #include <string>
 
-#include "../DLLmain.h"
+#include "../SDHD.h"
 
 #pragma once
 

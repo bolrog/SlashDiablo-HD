@@ -67,5 +67,6 @@
 #include "TemplateIncludes.h"
 
 void __fastcall D2TEMPLATE_FatalError(LPCWSTR wszMessage);
+bool SDHD_Initialize();
 
 #endif

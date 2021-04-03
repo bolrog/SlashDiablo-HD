@@ -63,7 +63,6 @@ D2HD::D2HDCellContext::D2HDCellContext(const std::string& fileName) : fileName(f
         break;
 
     default:
-        MessageBoxW(nullptr, L"D2HDContext not set up to handle this version.", L"Version not supported yet.", MB_OK);
         break;
     }
 }

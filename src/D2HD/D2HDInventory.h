@@ -50,7 +50,7 @@
 #ifndef D2HDINVENTORY_H
 #define D2HDINVENTORY_H
 
-#include "../DLLmain.h"
+#include "../SDHD.h"
 
 namespace D2HD {
 namespace Inventory {

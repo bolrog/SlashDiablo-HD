@@ -44,12 +44,13 @@
 
 #define _D2VARS_H
 
-#include "DLLmain.h"
+#include "SDHD.h"
 
 #include <fstream>
 
 #include "D2Patch.h"
 #include "D2Patches.h"
+#include "D2HD/D2HDConfig.h"
 
 void __fastcall D2TEMPLATE_FatalError(LPCWSTR wszMessage) {
     MessageBoxW(nullptr, wszMessage, L"SlashDiablo HD", MB_OK | MB_ICONERROR);
@@ -87,7 +88,7 @@ bool __fastcall D2TEMPLATE_GetDebugPrivilege() {
     return true;
 }
 
-bool __stdcall DllAttach() {
+bool SDHD_Initialize() {
     D2TEMPLATE_GetDebugPrivilege();
 
     HANDLE hGame = GetCurrentProcess();
@@ -103,48 +104,21 @@ bool __stdcall DllAttach() {
         return false;
     }
 
-    config.readSettings();
-
-    if (!config.isEnableMod()) {
-        return true;
-    }
-
-    if constexpr (D2HD::D2HDConfig::ALLOW_LOAD_MPQ_ARCHIVE) {
-        if (config.isEnableArchive()) {
-            std::ifstream in(config.getArchiveName());
-
-            if (in.good()) {
-                in.close();
-                D2HD::Draw::d2mrArchive = loadMPQ(5000, "SlashDiabloHD.dll",
-                                                  config.getArchiveName().c_str(), "SlashDiabloHD", 0, nullptr);
-            }
-        }
+    auto archiveFilename = "d2dx_d2hd.mpq";
+    std::ifstream in(archiveFilename);
+    if (in.good()) {
+        in.close();
+        D2HD::Draw::d2mrArchive = loadMPQ(5000, "SlashDiabloHD.dll",
+            archiveFilename, "SlashDiabloHD", 0, nullptr);
     }
 
     D2Patch::applyPatches(requiredHDPatches);
     D2Patch::applyPatches(requiredDrawPatches);
     D2Patch::applyPatches(inventoryPatches);
 
-    if (config.isEnable800ControlPanel()) {
+    if (D2HD::D2HDConfig::DEFAULT_ENABLE_800_CONTROL_PANEL) {
         D2Patch::applyPatches(controlPanel800Patches);
     }
 
-    if (D2Version::getGlide3xVersion() == Glide3xVersion::VERSION_14e) {
-        D2Patch::applyPatches(glide3xPatches);
-    }
-
     return true;
-}
-
-BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpReserved) {
-    switch (dwReason) {
-    case DLL_PROCESS_ATTACH: {
-        if (!DllAttach())
-            D2TEMPLATE_FatalError(L"Couldn't attach to Diablo II");
-
-        break;
-    }
-    }
-
-    return TRUE;
 }

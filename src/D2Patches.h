@@ -54,7 +54,7 @@
 #include <vector>
 
 #include "D2Patch.h"
-#include "DLLmain.h"
+#include "SDHD.h"
 
 // Required patches to enable new resolutions and prevent buggy behavior and
 // crashes.

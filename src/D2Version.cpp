@@ -66,12 +66,7 @@ bool D2Version::isGameVersion114Plus() {
 }
 
 Glide3xVersion D2Version::getGlide3xVersion() {
-    static Glide3xVersion glide3xVersion = getGlide3xVersion(determineVersionString(
-            L"glide3x.dll"));
-    if (glide3xVersion == Glide3xVersion::INVALID && d2dx::IsD2DXLoaded()) {
-        glide3xVersion = Glide3xVersion::D2DX;
-    }
-    return glide3xVersion;
+    return Glide3xVersion::D2DX;
 }
 
 Glide3xVersion D2Version::getGlide3xVersion(std::string_view versionString) {

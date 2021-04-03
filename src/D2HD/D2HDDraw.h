@@ -29,7 +29,7 @@
 #ifndef D2HDDRAW_H
 #define D2HDDRAW_H
 
-#include "../DLLmain.h"
+#include "../SDHD.h"
 
 namespace D2HD {
 namespace Draw {

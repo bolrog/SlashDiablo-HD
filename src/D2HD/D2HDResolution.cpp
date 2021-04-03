@@ -24,10 +24,10 @@
  *****************************************************************************/
 
 #include "D2HDResolution.h"
-#include "../../../src/d2dxintegration/D2DXIntegration.h"
+#include "../../../../src/d2dxintegration/D2DXIntegration.h"
 
 #include <algorithm>
-#include "../DLLmain.h"
+#include "../SDHD.h"
 
 std::vector<D2HD::D2HDResolution> D2HD::D2HDResolution::resolutions = {
     D2HD::D2HDResolution(640, 480),

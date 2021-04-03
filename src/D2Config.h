@@ -39,22 +39,6 @@ public:
     D2Config();
     D2Config(const std::wstring& configPath);
 
-    bool readBool(const std::wstring& sectionName, const std::wstring& keyName,
-                  const bool defaultValue) const;
-    unsigned int readHex(const std::wstring& sectionName,
-                         const std::wstring& keyName, const unsigned int defaultValue) const;
-    int readInt(const std::wstring& sectionName, const std::wstring& keyName,
-                const int defaultValue) const;
-    std::string readString(const std::wstring& sectionName,
-                           const std::wstring& keyName, const std::string& defaultValue) const;
-    unsigned int readUnsignedInt(const std::wstring& sectionName,
-                                 const std::wstring& keyName, const unsigned int defaultValue) const;
-    std::wstring readWideString(const std::wstring& sectionName,
-                                const std::wstring& keyName, const std::wstring& defaultValue) const;
-
-    virtual void readSettings() = 0;
-    std::wstring getConfigPath() const;
-
 private:
     std::wstring configPath;
 };
