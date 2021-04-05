@@ -112,7 +112,6 @@ int D2HD::D2HDCellContext::getFrame() const {
         break;
 
     default:
-        MessageBoxW(nullptr, L"D2HDContext not set up to handle this version.", L"Version not supported yet.", MB_OK);
         break;
     }
 
@@ -131,7 +130,6 @@ void D2HD::D2HDCellContext::setFrame(int frame) {
         break;
 
     default:
-        MessageBoxW(nullptr, L"D2HDContext not set up to handle this version.", L"Version not supported yet.", MB_OK);
         break;
     }
 }
@@ -150,7 +148,6 @@ CellFile* D2HD::D2HDCellContext::getCellFilePtr() const {
         break;
 
     default:
-        MessageBoxW(nullptr, L"D2HDContext not set up to handle this version.", L"Version not supported yet.", MB_OK);
         break;
     }
 
@@ -169,7 +166,6 @@ void D2HD::D2HDCellContext::setCellFilePtr(CellFile* pCellFile) {
         break;
 
     default:
-        MessageBoxW(nullptr, L"D2HDContext not set up to handle this version.", L"Version not supported yet.", MB_OK);
         break;
     }
 }
