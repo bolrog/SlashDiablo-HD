@@ -109,16 +109,62 @@ void __stdcall D2HD::setResolutionMode(int* gameResolution,
     }
 }
 
-void __stdcall D2HD::setResolutionModeFromMenu(int* mode) {
-    int currentMode = D2GFX_GetResolutionMode();
+enum class VideoOptionsProperty
+{
+    Unknown,
+    Resolution,
+    LightingQuality,
+    BlendedShadows,
+    Perspective
+};
 
-    if (currentMode == 0) {
-        *mode = 2;
-    } else if ((size_t) currentMode >= D2HDResolution::getResolutionCount() -
-               1) {
-        *mode = 0;
-    } else {
-        *mode = currentMode + 1;
+void __stdcall D2HD::setResolutionModeFromMenu(int* mode) {
+    static auto gameVersion = D2Version::getGameVersion();
+
+    if (!mode) {
+        return;
+    }
+
+    VideoOptionsProperty videoOptionsProperty = VideoOptionsProperty::Unknown;
+    if (gameVersion == GameVersion::VERSION_112) {
+        switch ((uintptr_t)mode) {
+        case 0x6fb9cbc4: videoOptionsProperty = VideoOptionsProperty::Resolution; break;
+        case 0x6fb9d114: videoOptionsProperty = VideoOptionsProperty::LightingQuality; break;
+        case 0x6fb9d664: videoOptionsProperty = VideoOptionsProperty::BlendedShadows; break;
+        case 0x6fb9dbb4: videoOptionsProperty = VideoOptionsProperty::Perspective; break;
+        }
+    } 
+    else if (gameVersion == GameVersion::VERSION_113c) {
+        switch ((uintptr_t)mode) {
+        case 0x6fb9abdc: videoOptionsProperty = VideoOptionsProperty::Resolution; break;
+        case 0x6fb9b12c: videoOptionsProperty = VideoOptionsProperty::LightingQuality; break;
+        case 0x6fb9b67c: videoOptionsProperty = VideoOptionsProperty::BlendedShadows; break;
+        case 0x6fb9bbcc: videoOptionsProperty = VideoOptionsProperty::Perspective; break;
+        }
+    }
+    else if (gameVersion == GameVersion::VERSION_113d) {
+        switch ((uintptr_t)mode) {
+        case 0x6fb94f44: videoOptionsProperty = VideoOptionsProperty::Resolution; break;
+        case 0x6fb95494: videoOptionsProperty = VideoOptionsProperty::LightingQuality; break;
+        case 0x6fb959e4: videoOptionsProperty = VideoOptionsProperty::BlendedShadows; break;
+        case 0x6fb95f34: videoOptionsProperty = VideoOptionsProperty::Perspective; break;
+        }
+    }
+
+    switch (videoOptionsProperty) {
+    case VideoOptionsProperty::Resolution:
+        if (*mode > 2) {
+            *mode = 0;
+        }
+        *mode = (1 << *mode) - 1;
+        break;
+    case VideoOptionsProperty::LightingQuality:
+        *mode = *mode % 3;
+        break;
+    case VideoOptionsProperty::BlendedShadows:
+    case VideoOptionsProperty::Perspective:
+        *mode = *mode % 2;
+        break;
     }
 }
 
