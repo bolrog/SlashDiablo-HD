@@ -24,11 +24,9 @@
  *****************************************************************************/
 
 #include "D2Version.h"
-#include "../../../src/d2dxintegration/D2DXIntegration.h"
 
 #include <windows.h>
 #include <memory>
-#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -101,14 +99,15 @@ std::string D2Version::determineVersionString(std::wstring_view filePath) {
                         // Doesn't matter if you are on 32 bit or 64 bit,
                         // DWORD is always 32 bits, so first two revision numbers
                         // come from dwFileVersionMS, last two come from dwFileVersionLS
-                        std::ostringstream stringStream;
+                        char temp[256];
 
-                        stringStream << ((verInfo->dwFileVersionMS >> 16) & 0xffff) << ".";
-                        stringStream << ((verInfo->dwFileVersionMS >> 0) & 0xffff) << ".";
-                        stringStream << ((verInfo->dwFileVersionLS >> 16) & 0xffff) << ".";
-                        stringStream << ((verInfo->dwFileVersionLS >> 0) & 0xffff);
+                        sprintf_s(temp, "%i.%i.%i.%i",
+                            ((verInfo->dwFileVersionMS >> 16) & 0xffff),
+                            ((verInfo->dwFileVersionMS >> 0) & 0xffff),
+                            ((verInfo->dwFileVersionLS >> 16) & 0xffff),
+                            ((verInfo->dwFileVersionLS >> 0) & 0xffff));
 
-                        returnValue = stringStream.str();
+                        returnValue = temp;
                     }
                 }
             }

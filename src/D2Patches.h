@@ -50,8 +50,6 @@
 #define _D2PATCHES_H
 
 #include <limits>
-#include <memory>
-#include <vector>
 
 #include "D2Patch.h"
 #include "SDHD.h"

@@ -48,10 +48,7 @@
 
 #include "D2HDCellContext.h"
 
-#include <memory>
-#include <string>
-
-D2HD::D2HDCellContext::D2HDCellContext(const std::string& fileName) : fileName(fileName), pCellContext(nullptr) {
+D2HD::D2HDCellContext::D2HDCellContext(const char* fileName) : fileName(fileName), pCellContext(nullptr) {
     switch (D2Version::getGameVersion()) {
     case GameVersion::VERSION_112:
         pCellContext = (struct CellContext_112*)calloc(1, sizeof(struct CellContext_112));
@@ -81,7 +78,7 @@ void D2HD::D2HDCellContext::loadFileSafely() {
         return;
     }
 
-    setCellFilePtr(D2WIN_LoadCellFile(fileName.c_str(), 0));
+    setCellFilePtr(D2WIN_LoadCellFile(fileName, 0));
     if (getCellFilePtr() == nullptr || (unsigned int)getCellFilePtr() == 1) {
         MessageBoxW(nullptr, L"CellFile asset failed to load.", L"Diablo II Error", MB_OK | MB_ICONERROR);
         std::exit(0);

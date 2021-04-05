@@ -26,12 +26,6 @@
 
 #include "D2HDConfig.h"
 
-#include <windows.h>
-
-#include <regex>
-#include <sstream>
-#include <string>
-
 #include "../SDHD.h"
 #include "D2HDColor.h"
 

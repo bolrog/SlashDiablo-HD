@@ -29,18 +29,11 @@
 #ifndef D2CONFIG_H
 #define D2CONFIG_H
 
-#include <string>
-
-class D2Config {
+class D2Config final {
 public:
-    static constexpr const wchar_t* DEFAULT_CONFIG_PATH =
-        L"./SlashDiablo-Tools.ini";
-
     D2Config();
-    D2Config(const std::wstring& configPath);
 
 private:
-    std::wstring configPath;
 };
 
 #endif // D2CONFIG_H

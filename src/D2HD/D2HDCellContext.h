@@ -47,7 +47,6 @@
  *****************************************************************************/
 
 #include <memory>
-#include <string>
 
 #include "../SDHD.h"
 
@@ -59,7 +58,7 @@
 namespace D2HD {
 class D2HDCellContext {
 public:
-    D2HDCellContext(const std::string& fileName);
+    D2HDCellContext(const char* fileName);
     ~D2HDCellContext();
 
     void draw(int x, int y, unsigned int color, int transTable, unsigned char* pPalette) const;
@@ -74,7 +73,7 @@ public:
 
 private:
     struct CellContext* pCellContext;
-    std::string fileName;
+    const char* fileName;
 
     void setCellFilePtr(CellFile* pCellFile);
 

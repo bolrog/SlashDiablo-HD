@@ -33,10 +33,6 @@
 #define D2HDCONFIG_H
 
 #include "../D2Config.h"
-
-#include <string>
-#include <windows.h>
-
 #include "D2HDColor.h"
 
 namespace D2HD {

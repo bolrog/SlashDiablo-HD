@@ -28,23 +28,16 @@
 #ifndef D2HDRESOLUTION_H
 #define D2HDRESOLUTION_H
 
-#include <vector>
-
 namespace D2HD {
-class D2HDResolution {
+class D2HDResolution final {
 public:
     D2HDResolution(const int width, const int height);
     int getWidth() const;
     int getHeight() const;
 
-    bool operator==(const D2HD::D2HDResolution& other) const;
-
-    static std::vector<D2HDResolution>& getResolutions();
+    static int getResolutionCount();
 
 private:
-    static std::vector<D2HDResolution> resolutions;
-    static void removeNonStandardResolutions();
-
     int width;
     int height;
 };

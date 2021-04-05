@@ -28,8 +28,6 @@
 #ifndef D2HDCOLOR_H
 #define D2HDCOLOR_H
 
-#include <string>
-
 namespace D2HD {
 class D2HDColor {
 public:
@@ -39,12 +37,8 @@ public:
     unsigned int getRGBFormat() const;
 
     static D2HDColor createFromRGBFormat(const unsigned int color);
-    static D2HDColor createFromRGBFormat(const std::string& color);
-    static D2HDColor createFromRGBFormat(const std::wstring& color);
 
     static D2HDColor createFromBGRFormat(const unsigned int color);
-    static D2HDColor createFromBGRFormat(const std::string& color);
-    static D2HDColor createFromBGRFormat(const std::wstring& color);
 
 private:
     unsigned char red;

@@ -51,11 +51,12 @@
 
 #include "../SDHD.h"
 
-#include "../../../../src/d2dx/D2DXIntegrationImpl.h"
+#include "../../../../src/d2dx/D2DXConfigurator.h"
 
 void __stdcall D2HD::getModeParams(int mode, int* width, int* height) {
 
-    if (d2dx::IsD2DXLoaded())
+    ID2DXConfigurator* configurator = D2DXGetConfigurator();
+    if (configurator)
     {
         switch (mode)
         {
@@ -69,33 +70,11 @@ void __stdcall D2HD::getModeParams(int mode, int* width, int* height) {
             *height = 600;
             break;
         default:
-            d2dx::GetSuggestedCustomResolution(width, height);
+            configurator->GetSuggestedCustomResolution(width, height);
             break;
         }
 
-        return;
-    }
-
-    if ((size_t) mode < D2HD::D2HDResolution::getResolutions().size()) {
-        *width = D2HD::D2HDResolution::getResolutions().at(mode).getWidth();
-        *height = D2HD::D2HDResolution::getResolutions().at(mode).getHeight();
-    } else {
-        *width = 640;
-        *height = 480;
-        MessageBoxW(nullptr,
-                    L"It appears that you have specified a custom resolution, but you haven't defined its width and height.",
-                    L"Missing Definition Case", MB_OK | MB_ICONSTOP);
-        std::exit(0);
-    }
-
-    if ((*width > D2HD::D2HDConfig::MAXIMUM_WIDTH
-            || *height > D2HD::D2HDConfig::MAXIMUM_HEIGHT)
-            || (*width < D2HD::D2HDConfig::MINIMUM_WIDTH
-                || *height < D2HD::D2HDConfig::MINIMUM_HEIGHT)) {
-        MessageBoxW(nullptr,
-                    L"You defined a new resolution that breaks expected limits. Change those limits in D2HD/D2HDConfig.h.",
-                    L"Defined Resolution Exceeds Limit", MB_OK | MB_ICONSTOP);
-        std::exit(0);
+        configurator->Release();
     }
 }
 
@@ -135,7 +114,7 @@ void __stdcall D2HD::setResolutionModeFromMenu(int* mode) {
 
     if (currentMode == 0) {
         *mode = 2;
-    } else if ((size_t) currentMode >= D2HDResolution::getResolutions().size() -
+    } else if ((size_t) currentMode >= D2HDResolution::getResolutionCount() -
                1) {
         *mode = 0;
     } else {
@@ -208,9 +187,11 @@ void __stdcall D2HD::setGlideRenderResolution(int newGameResolutionMode,
         *glideResolutionMode = 0xFF;
     }
 
-    if (d2dx::IsD2DXLoaded())
+    ID2DXConfigurator* configurator = D2DXGetConfigurator();
+    if (configurator)
     {
-        d2dx::SetCustomResolution(*D2GLIDE_WindowWidth, *D2GLIDE_WindowHeight);
+        configurator->SetCustomResolution(*D2GLIDE_WindowWidth, *D2GLIDE_WindowHeight);
+        configurator->Release();
     }
 
     *D2GLIDE_SpritesInited = (newGameResolutionMode != 1);

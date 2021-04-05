@@ -26,16 +26,5 @@
 
 #include "D2Config.h"
 
-#include <cstdlib>
-#include <regex>
-#include <windows.h>
-#include <ios>
-#include <iostream>
-#include <sstream>
-#include <string_view>
-
-D2Config::D2Config() : D2Config(DEFAULT_CONFIG_PATH) {
-}
-
-D2Config::D2Config(const std::wstring& configPath) : configPath(configPath) {
+D2Config::D2Config(){
 }
