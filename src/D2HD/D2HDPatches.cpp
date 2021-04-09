@@ -53,28 +53,26 @@
 
 #include "../../../../src/d2dx/D2DXConfigurator.h"
 
+namespace d2dx
+{
+    ID2DXConfigurator* GetConfiguratorInternal();
+}
+
 void __stdcall D2HD::getModeParams(int mode, int* width, int* height) {
-
-    ID2DXConfigurator* configurator = D2DXGetConfigurator();
-    if (configurator)
+    switch (mode)
     {
-        switch (mode)
-        {
-        case 0:
-            *width = 640;
-            *height = 480;
-            break;
-        case 1:
-        case 2:
-            *width = 800;
-            *height = 600;
-            break;
-        default:
-            configurator->GetSuggestedCustomResolution(width, height);
-            break;
-        }
-
-        configurator->Release();
+    case 0:
+        *width = 640;
+        *height = 480;
+        break;
+    case 1:
+    case 2:
+        *width = 800;
+        *height = 600;
+        break;
+    default:
+        d2dx::GetConfiguratorInternal()->GetSuggestedCustomResolution(width, height);
+        break;
     }
 }
 
@@ -233,12 +231,7 @@ void __stdcall D2HD::setGlideRenderResolution(int newGameResolutionMode,
         *glideResolutionMode = 0xFF;
     }
 
-    ID2DXConfigurator* configurator = D2DXGetConfigurator();
-    if (configurator)
-    {
-        configurator->SetCustomResolution(*D2GLIDE_WindowWidth, *D2GLIDE_WindowHeight);
-        configurator->Release();
-    }
+    d2dx::GetConfiguratorInternal()->SetCustomResolution(*D2GLIDE_WindowWidth, *D2GLIDE_WindowHeight);
 
     *D2GLIDE_SpritesInited = (newGameResolutionMode != 1);
 }
