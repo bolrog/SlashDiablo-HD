@@ -89,7 +89,8 @@ bool __fastcall D2TEMPLATE_GetDebugPrivilege() {
 }
 
 bool SDHD_Initialize() {
-    D2TEMPLATE_GetDebugPrivilege();
+    // Shouldn't be necessary. 
+    // D2TEMPLATE_GetDebugPrivilege();
 
     HANDLE hGame = GetCurrentProcess();
 
